@@ -8,13 +8,13 @@
 import Foundation
 
 
-protocol CollisionCheckable {
+protocol PREV_CollisionCheckable {
     var racingModel: RacingModel? { get set }
     func check() -> Bool
     func isCollide(_ enemy: any RacingCar) -> Bool
 }
 
-class CollisionHandler: CollisionCheckable {
+class CollisionHandler: PREV_CollisionCheckable {
     
     weak var racingModel: RacingModel? = nil
     

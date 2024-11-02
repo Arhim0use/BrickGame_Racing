@@ -42,13 +42,13 @@ class RacingModel : GameModel {
     /// - Note: count of player lives
     var livesCount: RacingInt = RacingDefines.startLiveCount
     
-    private var _colisionChecker: CollisionCheckable = CollisionHandler()
+    private var _colisionChecker: PREV_CollisionCheckable = CollisionHandler()
     private var _spawner: EnemySpawner = BasicEnemySpawner()
     private var _levelManager: Scorable = AdvancedLevelManager()
     private var _racingFSM: FinalStateMachine = RacingStateMachine()
     
     /// - Note: collision verification policy
-    var colisionChecker: CollisionCheckable {
+    var colisionChecker: PREV_CollisionCheckable {
         get { _colisionChecker }
         set {
             _colisionChecker = newValue

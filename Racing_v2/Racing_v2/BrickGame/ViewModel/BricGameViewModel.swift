@@ -9,6 +9,8 @@ import Foundation
 
 //import cFiles
 
+import Combine
+
 protocol BricGameViewModel {
     var currentState: BrickGameGameState { get }
     var score: RacingInt { get }
@@ -18,14 +20,13 @@ protocol BricGameViewModel {
 //    var speed: RacingInt: { get }
 //    var highscore: String { get }
     
-
     func startGame()
     func pauseGame()
     func updateGame(with action: UserAction?)
     func endGame()
 }
 
-class RacingViewModel: BricGameViewModel {
+class RacingViewModel: ObservableObject, BricGameViewModel {
     /*private*/ var _model: GameModel
     private var _gameInfo: GameInfoWrapper
 
