@@ -12,12 +12,26 @@ fileprivate let input: UserAction? = nil
 
 print("Hello, World!")
 
-do {
-    let viewModel = RacingViewModel()
-    viewModel.startGame()
-    while viewModel.currentState != .end && loop < 1 {
-        viewModel.updateGame(with: input)
-        print("loop:", loop)
-        loop += 1
-    }
+//do {
+//    let viewModel = RacingViewModel()
+//    viewModel.startGame()
+//    while viewModel.currentState != .end && loop < 1 {
+//        viewModel.updateGame(with: input)
+//        print("loop:", loop)
+//        loop += 1
+//    }
+//}
+
+var model = RacingModel()
+let spawner = BaseEnemySpawner(racingModel: model)
+
+while loop < 3 && model.enemys.isEmpty {
+    spawner.spawn()
+    loop += 1
 }
+
+
+model.enemys = spawner.racingModel!.enemys
+print("1 print(model.enemys.count", model.enemys.count)
+
+print("2 print(model.enemys.count", spawner.racingModel!.enemys.count)
