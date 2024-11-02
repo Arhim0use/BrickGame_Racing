@@ -31,7 +31,7 @@ protocol GameModel : AnyObject {
     func updateGameInfo() -> GameInfo_t
 }
 
-class RacingModel : GameModel {
+class PREV_RacingModel : GameModel {
     var player: PlayerCar
     var enemys: [EnemyRacingCar] = []
     var gameInfoWr: GameInfoWrapper

@@ -9,14 +9,14 @@ import Foundation
 
 
 protocol PREV_CollisionCheckable {
-    var racingModel: RacingModel? { get set }
+    var racingModel: PREV_RacingModel? { get set }
     func check() -> Bool
     func isCollide(_ enemy: any RacingCar) -> Bool
 }
 
 class CollisionHandler: PREV_CollisionCheckable {
     
-    weak var racingModel: RacingModel? = nil
+    weak var racingModel: PREV_RacingModel? = nil
     
     deinit {
             print("🛑 CollisionHandler deinit ")

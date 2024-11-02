@@ -32,7 +32,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
 
     init() {
         self._gameInfo = GameInfoWrapper()
-        self._model = RacingModel(gameInfoWrapper: self._gameInfo)
+        self._model = PREV_RacingModel(gameInfoWrapper: self._gameInfo)
     }
     
     deinit {
@@ -44,7 +44,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     }
     
     var currentState: BrickGameGameState {
-        guard let model = _model as? RacingModel else {
+        guard let model = _model as? PREV_RacingModel else {
             return .end
         }
         
@@ -52,7 +52,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     }
 
     var score: RacingInt {
-        guard let model = self._model as? RacingModel else {
+        guard let model = self._model as? PREV_RacingModel else {
             return 0
         }
         
@@ -60,21 +60,21 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     }
 
     var lives: RacingInt {
-        guard let model = self._model as? RacingModel else {
+        guard let model = self._model as? PREV_RacingModel else {
             return 0
         }
         return RacingInt(model.livesCount)
     }
 
     var level: RacingInt {
-        guard let model = self._model as? RacingModel else {
+        guard let model = self._model as? PREV_RacingModel else {
             return 0
         }
         return RacingInt(model.gameInfo.level)
     }
 
     func startGame() {
-        guard let model = self._model as? RacingModel else {
+        guard let model = self._model as? PREV_RacingModel else {
             return
         }
         
@@ -82,7 +82,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     }
 
     func pauseGame() {
-        guard let model = self._model as? RacingModel else {
+        guard let model = self._model as? PREV_RacingModel else {
             return
         }
         
@@ -90,7 +90,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     }
 
     func updateGame(with action: UserAction?) {
-        guard let model = self._model as? RacingModel else {
+        guard let model = self._model as? PREV_RacingModel else {
             return
         }
         

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PREV_EnemySpawner {
-    var racingModel: RacingModel? { get set }
+    var racingModel: PREV_RacingModel? { get set }
     var enemyType: [EnemyRacingCar.Type] { get set }
     
     init()
@@ -18,7 +18,7 @@ protocol PREV_EnemySpawner {
 }
 
 class BasicEnemySpawner : PREV_EnemySpawner {
-    weak var racingModel: RacingModel? = nil
+    weak var racingModel: PREV_RacingModel? = nil
     var enemyType: [EnemyRacingCar.Type] = []
     
     required init() {

@@ -99,7 +99,7 @@ class RacingStateMachine : FinalStateMachine {
             _currentState = .spawn
         }
         
-        if let model = gameModel as? RacingModel {
+        if let model = gameModel as? PREV_RacingModel {
             model.gameInfoWr.gameState = .gameRun
             model.restartGame()
         }
@@ -172,12 +172,12 @@ class RacingStateMachine : FinalStateMachine {
         }
     }
 
-    private func racingModelInteraction(_ interaction: (RacingModel) -> ()) {
+    private func racingModelInteraction(_ interaction: (PREV_RacingModel) -> ()) {
         guard let gameModel = self.gameModel else {
             return
         }
         
-        if let model = gameModel as? RacingModel {
+        if let model = gameModel as? PREV_RacingModel {
             interaction(model)
         }
     }

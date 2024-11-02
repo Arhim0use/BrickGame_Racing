@@ -8,7 +8,7 @@
 import Foundation
 
 protocol Scorable {
-    var racingModel: RacingModel? { get set }
+    var racingModel: PREV_RacingModel? { get set }
     
     func addPoints(_ points: Int)
     func addPoints()
@@ -17,7 +17,7 @@ protocol Scorable {
 }
 
 class PREV_LevelManager: Scorable {
-    weak var racingModel: RacingModel?
+    weak var racingModel: PREV_RacingModel?
     
     deinit {
         print("🛑 levelmanager deinit ")
