@@ -27,7 +27,7 @@ protocol BricGameViewModel {
 }
 
 class RacingViewModel: ObservableObject, BricGameViewModel {
-    /*private*/ var _model: GameModel
+    /*private*/ var _model: PREV_GameModel
     private var _gameInfo: GameInfoWrapper
 
     init() {

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NewGameModel {
+protocol GameModel {
     var gameInfoWrapper: GameInfoWrapper { get set }
     var gameInfo: GameInfo_t { get }
     var score: Int32 { get }
@@ -19,7 +19,7 @@ protocol NewGameModel {
     func placeObjectOnField()
 }
 
-struct RacingModel: NewGameModel {
+struct RacingModel: GameModel {
     
     var gameInfoWrapper = GameInfoWrapper()
     var player = PlayerCar()

@@ -17,7 +17,7 @@ fileprivate let input: UserAction? = nil
 
 
 
-protocol GameModel : AnyObject {
+protocol PREV_GameModel : AnyObject {
     func startGame()
     func runGame()
     
@@ -31,7 +31,7 @@ protocol GameModel : AnyObject {
     func updateGameInfo() -> GameInfo_t
 }
 
-class PREV_RacingModel : GameModel {
+class PREV_RacingModel : PREV_GameModel {
     var player: PlayerCar
     var enemys: [EnemyRacingCar] = []
     var gameInfoWr: GameInfoWrapper

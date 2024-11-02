@@ -19,7 +19,7 @@ enum BrickGameGameState {
 }
 
 protocol PREV_FinalStateMachine {
-    var gameModel: GameModel? { get set }
+    var gameModel: PREV_GameModel? { get set }
     
     var currentState: BrickGameGameState { get }
     func gameLoop(_ playerInput: UserAction?) -> GameInfo_t
@@ -29,9 +29,9 @@ protocol PREV_FinalStateMachine {
 class RacingStateMachine : PREV_FinalStateMachine {
     private var _currentState: BrickGameGameState = .pause
     var currentState: BrickGameGameState { get { _currentState } }
-    weak var gameModel: GameModel? = nil
+    weak var gameModel: PREV_GameModel? = nil
     
-    init(gameModel: GameModel) {
+    init(gameModel: PREV_GameModel) {
         self.gameModel = gameModel
     }
     
