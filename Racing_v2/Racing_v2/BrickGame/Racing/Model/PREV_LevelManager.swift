@@ -63,7 +63,7 @@ class PREV_LevelManager: Scorable {
 
 class AdvancedLevelManager: PREV_LevelManager {
     
-    let spawners: [EnemySpawner.Type] = [BasicEnemySpawner.self, LeftEnemySpawner.self, RightEnemySpawner.self, GeometricEnemySpawner.self]
+    let spawners: [PREV_EnemySpawner.Type] = [BasicEnemySpawner.self, LeftEnemySpawner.self, RightEnemySpawner.self, GeometricEnemySpawner.self]
     
     deinit {
             print("🛑 AdvancedLevelManager deinit ")
@@ -84,7 +84,7 @@ class AdvancedLevelManager: PREV_LevelManager {
     }
     
     /// - Note: selects a spawner depending on the score
-    func spawnerSelect() -> EnemySpawner.Type {
+    func spawnerSelect() -> PREV_EnemySpawner.Type {
         guard let model = racingModel else {
             return BasicEnemySpawner.self
         }

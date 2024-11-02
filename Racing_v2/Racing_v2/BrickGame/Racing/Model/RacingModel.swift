@@ -43,7 +43,7 @@ class RacingModel : GameModel {
     var livesCount: RacingInt = RacingDefines.startLiveCount
     
     private var _colisionChecker: PREV_CollisionCheckable = CollisionHandler()
-    private var _spawner: EnemySpawner = BasicEnemySpawner()
+    private var _spawner: PREV_EnemySpawner = BasicEnemySpawner()
     private var _levelManager: Scorable = AdvancedLevelManager()
     private var _racingFSM: FinalStateMachine = RacingStateMachine()
     
@@ -57,7 +57,7 @@ class RacingModel : GameModel {
     }
     
     /// - Note: policy for creating new objects
-    var spawner: EnemySpawner {
+    var spawner: PREV_EnemySpawner {
         get { self._spawner }
         set {
             self._spawner = newValue

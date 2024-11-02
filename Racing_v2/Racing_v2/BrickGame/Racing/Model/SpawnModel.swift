@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EnemySpawner {
+protocol PREV_EnemySpawner {
     var racingModel: RacingModel? { get set }
     var enemyType: [EnemyRacingCar.Type] { get set }
     
@@ -17,7 +17,7 @@ protocol EnemySpawner {
     func spawn() -> Any?
 }
 
-class BasicEnemySpawner : EnemySpawner {
+class BasicEnemySpawner : PREV_EnemySpawner {
     weak var racingModel: RacingModel? = nil
     var enemyType: [EnemyRacingCar.Type] = []
     
