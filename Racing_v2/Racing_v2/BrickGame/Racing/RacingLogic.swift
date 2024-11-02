@@ -10,7 +10,7 @@ import Foundation
 
 class RacingLogic {
     private var _collisionHandler: PREV_CollisionCheckable
-    private var _lvlManager: LevelManager
+    private var _lvlManager: PREV_LevelManager
     private var _racingFSM: FinalStateMachine
     private var _spawner: EnemySpawner
     private var _racingModel: RacingModel
@@ -23,7 +23,7 @@ class RacingLogic {
         //        }
     }
     
-    var lvlManager: LevelManager {
+    var lvlManager: PREV_LevelManager {
         get { self._lvlManager }
     }
     
@@ -44,7 +44,7 @@ class RacingLogic {
 //    }
     
     /// - Note: **Заглушка**
-    init(_collisionHandler: PREV_CollisionCheckable, _lvlManager: LevelManager, _racingFSM: FinalStateMachine, _spawner: EnemySpawner, _racingModel: RacingModel) {
+    init(_collisionHandler: PREV_CollisionCheckable, _lvlManager: PREV_LevelManager, _racingFSM: FinalStateMachine, _spawner: EnemySpawner, _racingModel: RacingModel) {
        
         self._racingModel = _racingModel
         self._collisionHandler = _collisionHandler

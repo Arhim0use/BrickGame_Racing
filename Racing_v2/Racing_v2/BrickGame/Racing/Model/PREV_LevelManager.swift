@@ -16,7 +16,7 @@ protocol Scorable {
     func resetScore()
 }
 
-class LevelManager: Scorable {
+class PREV_LevelManager: Scorable {
     weak var racingModel: RacingModel?
     
     deinit {
@@ -61,7 +61,7 @@ class LevelManager: Scorable {
     }
 }   //  class LevelManager
 
-class AdvancedLevelManager: LevelManager {
+class AdvancedLevelManager: PREV_LevelManager {
     
     let spawners: [EnemySpawner.Type] = [BasicEnemySpawner.self, LeftEnemySpawner.self, RightEnemySpawner.self, GeometricEnemySpawner.self]
     
