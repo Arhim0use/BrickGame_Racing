@@ -18,7 +18,7 @@ enum BrickGameGameState {
     case end
 }
 
-protocol FinalStateMachine {
+protocol PREV_FinalStateMachine {
     var gameModel: GameModel? { get set }
     
     var currentState: BrickGameGameState { get }
@@ -26,7 +26,7 @@ protocol FinalStateMachine {
     func start()
 }
 
-class RacingStateMachine : FinalStateMachine {
+class RacingStateMachine : PREV_FinalStateMachine {
     private var _currentState: BrickGameGameState = .pause
     var currentState: BrickGameGameState { get { _currentState } }
     weak var gameModel: GameModel? = nil
