@@ -19,7 +19,7 @@ protocol GameModel {
     func placeObjectOnField()
 }
 
-struct RacingModel: GameModel {
+class RacingModel: GameModel {
     
     var gameInfoWrapper = GameInfoWrapper()
     var player = PlayerCar()
