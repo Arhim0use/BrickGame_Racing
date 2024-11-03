@@ -45,7 +45,7 @@ class PREV_RacingModel : PREV_GameModel {
     private var _colisionChecker: PREV_CollisionCheckable = PREV_CollisionHandler()
     private var _spawner: PREV_EnemySpawner = BasicEnemySpawner()
     private var _levelManager: PREV_Scorable = AdvancedLevelManager()
-    private var _racingFSM: PREV_FinalStateMachine = RacingStateMachine()
+    private var _racingFSM: PREV_FinalStateMachine = PREV_RacingStateMachine()
     
     /// - Note: collision verification policy
     var colisionChecker: PREV_CollisionCheckable {
@@ -142,7 +142,7 @@ class PREV_RacingModel : PREV_GameModel {
     public func pauseGame() {
         let switchState: BrickGameGameState = racingFSM.currentState != .pause ? .pause : .moving
         
-        if let fsm = _racingFSM as? RacingStateMachine {
+        if let fsm = _racingFSM as? PREV_RacingStateMachine {
             fsm.setState(switchState)
         }
     }

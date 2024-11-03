@@ -26,7 +26,7 @@ protocol PREV_FinalStateMachine {
     func start()
 }
 
-class RacingStateMachine : PREV_FinalStateMachine {
+class PREV_RacingStateMachine : PREV_FinalStateMachine {
     private var _currentState: BrickGameGameState = .pause
     var currentState: BrickGameGameState { get { _currentState } }
     weak var gameModel: PREV_GameModel? = nil
