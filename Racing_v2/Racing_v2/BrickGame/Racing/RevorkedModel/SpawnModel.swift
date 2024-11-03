@@ -18,7 +18,7 @@ protocol EnemyCarSpawner {
 
 class BaseEnemySpawner: EnemyCarSpawner {
 
-    var racingModel: RacingModel?
+    weak var racingModel: RacingModel?
     
     var enemyType: [any EnemyRacingCar.Type] = []
     
