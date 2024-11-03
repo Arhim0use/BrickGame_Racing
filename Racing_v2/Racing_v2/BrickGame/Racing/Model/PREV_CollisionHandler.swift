@@ -14,7 +14,7 @@ protocol PREV_CollisionCheckable {
     func isCollide(_ enemy: any RacingCar) -> Bool
 }
 
-class CollisionHandler: PREV_CollisionCheckable {
+class PREV_CollisionHandler: PREV_CollisionCheckable {
     
     weak var racingModel: PREV_RacingModel? = nil
     

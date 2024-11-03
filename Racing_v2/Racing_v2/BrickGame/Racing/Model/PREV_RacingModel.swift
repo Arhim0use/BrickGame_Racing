@@ -42,7 +42,7 @@ class PREV_RacingModel : PREV_GameModel {
     /// - Note: count of player lives
     var livesCount: RacingInt = RacingDefines.startLiveCount
     
-    private var _colisionChecker: PREV_CollisionCheckable = CollisionHandler()
+    private var _colisionChecker: PREV_CollisionCheckable = PREV_CollisionHandler()
     private var _spawner: PREV_EnemySpawner = BasicEnemySpawner()
     private var _levelManager: PREV_Scorable = AdvancedLevelManager()
     private var _racingFSM: PREV_FinalStateMachine = RacingStateMachine()
