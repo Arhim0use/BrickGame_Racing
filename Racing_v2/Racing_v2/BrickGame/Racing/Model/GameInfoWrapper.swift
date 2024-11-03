@@ -166,12 +166,12 @@ class GameInfoWrapper {
     }
     
     func matrixIsAllocate() -> Bool {
-        guard gameInfo.field == nil else {
+        guard let rowsPointer = gameInfo.field else {
             return false
         }
         
         for j in 0..<RacingDefines.yBorderSize {
-            if gameInfo.field[j] == nil {
+            guard rowsPointer[j] != nil else {
                 return false
             }
         }
