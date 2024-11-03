@@ -16,7 +16,7 @@ protocol CollisionCars: CollisionCheckable {
     init (racingModel: RacingModel)
 }
 
-class ____CollisionHandler: CollisionCars {
+class CollisionHandler: CollisionCars {
 
     var racingModel: RacingModel
     
