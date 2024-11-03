@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Scorable {
+protocol PREV_Scorable {
     var racingModel: PREV_RacingModel? { get set }
     
     func addPoints(_ points: Int)
@@ -16,7 +16,7 @@ protocol Scorable {
     func resetScore()
 }
 
-class PREV_LevelManager: Scorable {
+class PREV_LevelManager: PREV_Scorable {
     weak var racingModel: PREV_RacingModel?
     
     deinit {

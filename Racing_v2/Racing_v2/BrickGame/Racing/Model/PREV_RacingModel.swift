@@ -44,7 +44,7 @@ class PREV_RacingModel : PREV_GameModel {
     
     private var _colisionChecker: PREV_CollisionCheckable = CollisionHandler()
     private var _spawner: PREV_EnemySpawner = BasicEnemySpawner()
-    private var _levelManager: Scorable = AdvancedLevelManager()
+    private var _levelManager: PREV_Scorable = AdvancedLevelManager()
     private var _racingFSM: PREV_FinalStateMachine = RacingStateMachine()
     
     /// - Note: collision verification policy
@@ -72,7 +72,7 @@ class PREV_RacingModel : PREV_GameModel {
     }
     
     /// - Note: Keeps track of the score and changes levels
-    var levelManager: Scorable {
+    var levelManager: PREV_Scorable {
         get { self._levelManager }
         set {
             _levelManager = newValue
