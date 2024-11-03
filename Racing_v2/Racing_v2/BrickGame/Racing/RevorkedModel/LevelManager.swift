@@ -8,16 +8,22 @@
 import Foundation
 
 //protocol Scorable {
-//    var racingModel: RacingModel? { get set }
-//    
 //    func addPoints(_ points: Int)
 //    func addPoints()
-//    func levelUp()
 //    func resetScore()
 //}
-
-//class LevelManager: PREV_Scorable {
-//    weak var racingModel: PREV_RacingModel?
+//
+//class ScoreManager {
+//    
+//}
+//
+//protocol LevelManager {
+//    var gameModel: GameModel? { get set }
+//    func levelUp()
+//}
+//
+//class LevelHandler: LevelManager {
+//    weak var gameModel: GameModel?
 //    
 //    deinit {
 //        print("🛑 levelmanager deinit ")
@@ -25,14 +31,14 @@ import Foundation
 //    
 //    /// - Note: use this to update lvl and add score points
 //    func addPoints(_ points: RacingInt) {
-//        guard let model = racingModel else {
+//        guard let model = gameModel, let model = model as? RacingModel else {
 //            return
 //        }
 //        
 //        for (pos, enemy) in model.enemys.enumerated() {
 //            if enemy.yPos >= RacingDefines.yBorderSize {
 //                model.enemys.remove(at: pos)
-//                model.gameInfoWr.gameInfo.score += Int32(points)
+//                model.score += Int32(points)
 //                if model.gameInfo.level < RacingDefines.maxLevel {
 //                    levelUp()
 //                }
@@ -45,18 +51,14 @@ import Foundation
 //        addPoints(1)
 //    }
 //    
-//    func resetScore() {
-//        racingModel?.gameInfoWr.gameInfo.score = 0
-//    }
-//    
 //    /// - Note: add lvl if gameInfo.score % RacingDefines.toNextLvl
 //    func levelUp() {
-//        guard let model = racingModel else {
+//        guard let model = gameModel else {
 //            return
 //        }
 //        
 //        if RacingInt(model.gameInfo.score) % RacingDefines.toNextLvl == 0 {
-//            model.gameInfoWr.gameInfo.level +=  1
+////            model.gameInfoWrapper.gameInfo.level +=  1
 //        }
 //    }
 //}   //  class LevelManager

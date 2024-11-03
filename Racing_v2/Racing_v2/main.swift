@@ -21,17 +21,17 @@ print("Hello, World!")
 //        loop += 1
 //    }
 //}
-
-var model = RacingModel()
-let spawner = BaseEnemySpawner(racingModel: model)
-
-while loop < 3 && model.enemys.isEmpty {
-    spawner.spawn()
-    loop += 1
+do {
+    let model = RacingModel()
+    let spawner = BaseEnemySpawner(racingModel: model)
+    
+    while loop < 3 && model.enemys.isEmpty {
+        spawner.spawn()
+        loop += 1
+    }
+    
+    
+//    print("1 print(model.enemys.count", model.enemys.count)
+//    
+//    print("2 print(model.enemys.count", spawner.racingModel!.enemys.count)
 }
-
-
-model.enemys = spawner.racingModel!.enemys
-print("1 print(model.enemys.count", model.enemys.count)
-
-print("2 print(model.enemys.count", spawner.racingModel!.enemys.count)

@@ -7,8 +7,8 @@
 
 import Foundation
 
-protocol GameModel {
-    var gameInfoWrapper: GameInfoWrapper { get set }
+protocol GameModel: AnyObject {
+
     var gameInfo: GameInfo_t { get }
     var score: Int32 { get }
     var highScore: Int32  { get }
@@ -24,6 +24,10 @@ class RacingModel: GameModel {
     var gameInfoWrapper = GameInfoWrapper()
     var player = PlayerCar()
     var enemys: [EnemyRacingCar] = []
+    
+    deinit {
+        print("🛑 RacingModel deinit ")
+    }
     
     var gameInfo: GameInfo_t { get { gameInfoWrapper.gameInfo } }
     

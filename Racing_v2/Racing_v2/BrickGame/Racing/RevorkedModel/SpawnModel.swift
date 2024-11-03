@@ -7,18 +7,20 @@
 
 import Foundation
 
-protocol EnemyCarSpawner {
-    var racingModel: RacingModel? { get set }
+protocol Spawner {
+    func spawn()
+}
+
+protocol EnemyCarSpawner: Spawner {
+    var racingModel: RacingModel { get set }
     var enemyType: [EnemyRacingCar.Type] { get set }
     
     init(racingModel: RacingModel)
-    
-    func spawn()
 }
 
 class BaseEnemySpawner: EnemyCarSpawner {
 
-    weak var racingModel: RacingModel?
+    var racingModel: RacingModel
     
     var enemyType: [any EnemyRacingCar.Type] = []
     
@@ -27,8 +29,14 @@ class BaseEnemySpawner: EnemyCarSpawner {
         enemyType.append(EnemyCar.self)
     }
     
+    
+    deinit {
+        print("🛑 BaseEnemySpawner deinit ")
+    }
+    
+    
     func spawn() {
-        guard let racingModel = self.racingModel, racingModel.enemys.count < 3
+        guard racingModel.enemys.count < 3
                 && racingModel.enemys.filter({ $0.yPos < 2 }).isEmpty
         else {
             return
