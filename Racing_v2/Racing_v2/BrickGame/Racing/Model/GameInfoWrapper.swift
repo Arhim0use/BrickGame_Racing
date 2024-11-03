@@ -154,7 +154,7 @@ class GameInfoWrapper {
                     char = (j % 3 == 0) ? char : " "
                     char = row[k] < 1 ? char : "\(row[k] - 1)"
                     char = row[k] > 0 ? "⎕" : char
-                    char = row[k] == 2 ? "🀫" : char
+                    char = row[k] == 2 ? "@" : char
                     print(char, terminator: "")
                     
                 }
