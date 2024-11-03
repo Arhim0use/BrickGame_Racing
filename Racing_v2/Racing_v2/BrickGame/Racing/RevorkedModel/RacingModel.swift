@@ -19,11 +19,19 @@ protocol GameModel: AnyObject {
     func placeObjectOnField()
 }
 
-class RacingModel: GameModel {
-    
+extension RacingModel: Equatable {
+    static func == (lhs: RacingModel, rhs: RacingModel) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+class RacingModel: GameModel, Identifiable {
+    let id: ObjectIdentifier = ObjectIdentifier(RacingModel.self)
     var gameInfoWrapper = GameInfoWrapper()
     var player = PlayerCar()
     var enemys: [EnemyRacingCar] = []
+    
+    private var _playerLives = RacingDefines.startLiveCount
     
     deinit {
         print("🛑 RacingModel deinit ")
@@ -55,6 +63,16 @@ class RacingModel: GameModel {
         }
         set {
             gameInfoWrapper.gameInfo.level = newValue
+        }
+    }
+    
+    var lives: RacingInt {
+        get { _playerLives }
+        set {
+            guard newValue < 0, _playerLives > 0 else {
+                return
+            }
+            _playerLives = newValue
         }
     }
     
