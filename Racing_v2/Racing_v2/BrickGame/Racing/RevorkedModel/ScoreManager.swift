@@ -24,6 +24,10 @@ class ScoreManager: Scorable, RacingScoreManager {
         self.racingModel = racingModel
     }
     
+    deinit {
+        print("🛑 levelmanager deinit")
+    }
+    
     func addPoints() {
         for (pos, enemy) in racingModel.enemys.enumerated() {
             if enemy.yPos >= RacingDefines.yBorderSize {
@@ -37,13 +41,14 @@ class ScoreManager: Scorable, RacingScoreManager {
         }
     }
     
+    /// - Note: calculate the price for enemy car
     func addPoints(enemyType: EnemyRacingCar.Type) -> RacingInt {
         
         guard let enemyType = enemyType as? HasScorePrice else {
-            return CarPrice.defaultPrice
+            return RacingInt(CarPrice.defaultPrice)
         }
         
-        return enemyType.getPrice()
+        return RacingInt(enemyType.getPrice())
     }
     
     func resetScore() {
