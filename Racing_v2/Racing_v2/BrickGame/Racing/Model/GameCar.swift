@@ -18,14 +18,14 @@ protocol EnemyRacingCar : RacingCar {
 }  //  protocol EnemyRacingCar
 
 protocol HasScorePrice {
-    func getPrice() -> RacingInt
+    func getPrice() -> UInt16
 }
 
 struct CarPrice {
-    static let defaultPrice = 5
-    static let dotEnemyPrice = 1
-    static let blockEnemyPrice = 2
-    static let doorWallPrice = 8
+    static let defaultPrice: UInt16 = 5
+    static let dotEnemyPrice: UInt16 = 1
+    static let blockEnemyPrice: UInt16 = 2
+    static let doorWallPrice: UInt16 = 8
 }
 
 struct GameCar {
@@ -126,7 +126,7 @@ class EnemyCar: RacingCar, EnemyRacingCar {
 }   //  class EnemyCar
 
 extension EnemyCar: HasScorePrice {
-    func getPrice() -> RacingInt {
+    func getPrice() -> UInt16 {
         return CarPrice.defaultPrice
     }
 }
@@ -155,7 +155,7 @@ class SmallEnemy: EnemyRacingCar {
 }
 
 extension SmallEnemy: HasScorePrice {
-    func getPrice() -> RacingInt {
+    func getPrice() -> UInt16 {
         return CarPrice.defaultPrice
     }
 }
@@ -179,7 +179,7 @@ class DotEnemy: EnemyRacingCar {
 }
 
 extension DotEnemy: HasScorePrice {
-    func getPrice() -> RacingInt {
+    func getPrice() -> UInt16 {
         return CarPrice.dotEnemyPrice
     }
 }
@@ -205,7 +205,7 @@ class BlockEnemy: EnemyRacingCar {
 }
 
 extension BlockEnemy: HasScorePrice {
-    func getPrice() -> RacingInt {
+    func getPrice() -> UInt16 {
         return CarPrice.blockEnemyPrice
     }
 }
@@ -235,7 +235,7 @@ class DoorEnemy: EnemyRacingCar {
 }
 
 extension DoorEnemy: HasScorePrice {
-    func getPrice() -> RacingInt {
+    func getPrice() -> UInt16 {
         return CarPrice.doorWallPrice
     }
 }
