@@ -17,6 +17,17 @@ protocol EnemyRacingCar : RacingCar {
     init(xPos: RacingInt, yPos: RacingInt)
 }  //  protocol EnemyRacingCar
 
+protocol HasScorePrice {
+    func getPrice() -> RacingInt
+}
+
+struct CarPrice {
+    static let defaultPrice = 5
+    static let dotEnemyPrice = 1
+    static let blockEnemyPrice = 2
+    static let doorWallPrice = 8
+}
+
 struct GameCar {
     enum CarType {
         case Player, Enemy
@@ -114,6 +125,12 @@ class EnemyCar: RacingCar, EnemyRacingCar {
     }
 }   //  class EnemyCar
 
+extension EnemyCar: HasScorePrice {
+    func getPrice() -> RacingInt {
+        return CarPrice.defaultPrice
+    }
+}
+
 class SmallEnemy: EnemyRacingCar {
     var xPos: RacingInt
     var yPos: RacingInt
@@ -137,6 +154,12 @@ class SmallEnemy: EnemyRacingCar {
     }
 }
 
+extension SmallEnemy: HasScorePrice {
+    func getPrice() -> RacingInt {
+        return CarPrice.defaultPrice
+    }
+}
+
 class DotEnemy: EnemyRacingCar {
     var xPos: RacingInt
     var yPos: RacingInt
@@ -152,6 +175,12 @@ class DotEnemy: EnemyRacingCar {
         self.car = GameCar(type: .Enemy, car: [[2]])
         self.xPos = xPos
         self.yPos = yPos
+    }
+}
+
+extension DotEnemy: HasScorePrice {
+    func getPrice() -> RacingInt {
+        return CarPrice.dotEnemyPrice
     }
 }
 
@@ -172,6 +201,12 @@ class BlockEnemy: EnemyRacingCar {
                                                [2, 2, 2]])
         self.xPos = xPos
         self.yPos = yPos
+    }
+}
+
+extension BlockEnemy: HasScorePrice {
+    func getPrice() -> RacingInt {
+        return CarPrice.blockEnemyPrice
     }
 }
 
@@ -196,5 +231,11 @@ class DoorEnemy: EnemyRacingCar {
                                                [2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2]])
         self.xPos = xPos
         self.yPos = yPos
+    }
+}
+
+extension DoorEnemy: HasScorePrice {
+    func getPrice() -> RacingInt {
+        return CarPrice.doorWallPrice
     }
 }
