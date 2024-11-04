@@ -86,7 +86,12 @@ class RacingModel: GameModel, Identifiable {
     }
     
     /// - Note: сделать скорость вычесляемой
-    var speed: Int32 { get { gameInfo.speed } }
+    var speed: Int32 {
+        get { gameInfo.speed }
+        set {
+            gameInfoWrapper.gameInfo.speed = newValue
+        }
+    }
     
     func placeObjectOnField() {
         guard gameInfoWrapper.matrixIsAllocate() else {
