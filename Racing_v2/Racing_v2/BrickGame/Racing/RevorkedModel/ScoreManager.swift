@@ -34,9 +34,6 @@ class ScoreManager: Scorable, RacingScoreManager {
                 let points = addPoints(enemyType: type(of: racingModel.enemys[pos]))
                 racingModel.enemys.remove(at: pos)
                 racingModel.score += Int32(points)
-//                if model.gameInfo.level < RacingDefines.maxLevel {
-//                    levelUp()
-//                }
             }
         }
     }
