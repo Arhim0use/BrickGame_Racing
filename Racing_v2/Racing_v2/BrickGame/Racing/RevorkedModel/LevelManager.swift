@@ -34,10 +34,11 @@ class LevelHandler: LevelManager {
     
     func changeLVL() {
         if let model = gameModel as? RacingModel,
-            RacingInt(gameModel.gameInfo.score) % RacingDefines.toNextLvl == 0
+            RacingInt(gameModel.score) % RacingDefines.toNextLvl == 0
         {
-            model.gameInfoWrapper.gameInfo.level +=  1
-            model.speed += 50
+            let lvl = gameModel.score / Int32(RacingDefines.toNextLvl)
+            model.gameInfoWrapper.gameInfo.level = lvl
+            model.gameInfoWrapper.gameInfo.speed += 50
         }
     }
 }   //  class LevelManager
