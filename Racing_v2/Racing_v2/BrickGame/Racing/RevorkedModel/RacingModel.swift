@@ -107,7 +107,7 @@ class RacingModel: GameModel, Identifiable {
     }
     
     private func placeCarField(rCar: RacingCar) {
-        for carRow in 0..<rCar.car.ySize {
+        for carRow in 0..<rCar.ySize {
             let fieldY = rCar.yPos + carRow
 
             if fieldY < 0 {
@@ -118,14 +118,14 @@ class RacingModel: GameModel, Identifiable {
                 break
             }
             
-            for carCell in 0..<rCar.car.xSize {
+            for carCell in 0..<rCar.xSize {
                 let fieldX = rCar.xPos + carCell
                 if fieldX >= RacingDefines.xBorderSize {
                     continue
                 }
 
                 if gameInfoWrapper.gameInfo.field[fieldY]![fieldX] == 0 {
-                    gameInfoWrapper.gameInfo.field[fieldY]![fieldX] = Int32(rCar.car.car[carRow][carCell])
+                    gameInfoWrapper.gameInfo.field[fieldY]![fieldX] = Int32(rCar.car[carRow][carCell])
                 }
             }
         }

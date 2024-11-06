@@ -38,9 +38,9 @@ class CollisionHandler: CollisionCars {
             return false
         }
         
-        for enemy in racingModel.enemys where racingModel.player.yPos <= enemy.yPos + enemy.car.ySize {
-            if racingModel.player.xPos <= enemy.xPos + enemy.car.xSize
-                && racingModel.player.xPos + racingModel.player.car.xSize > enemy.xPos {
+        for enemy in racingModel.enemys where racingModel.player.yPos <= enemy.yPos + enemy.ySize {
+            if racingModel.player.xPos <= enemy.xPos + enemy.xSize
+                && racingModel.player.xPos + racingModel.player.xSize > enemy.xPos {
                 if isCollide(enemy) {
                     racingModel.player.isImmortal = true
                     return true
@@ -59,15 +59,15 @@ class CollisionHandler: CollisionCars {
         let xOffset = secondCar.xPos - firstCar.xPos
         let yOffset = secondCar.yPos - firstCar.yPos
 
-        for y1 in 0..<firstCar.car.ySize {
-            for x1 in 0..<firstCar.car.xSize {
+        for y1 in 0..<firstCar.ySize {
+            for x1 in 0..<firstCar.xSize {
 
                 let y2 = y1 - yOffset
                 let x2 = x1 - xOffset
                 
-                if y2 >= 0 && y2 < secondCar.car.ySize && x2 >= 0 && x2 < secondCar.car.xSize {
-                    let firstValue = firstCar.car.car[y1][x1]
-                    let secondValue = secondCar.car.car[y2][x2]
+                if y2 >= 0 && y2 < secondCar.ySize && x2 >= 0 && x2 < secondCar.xSize {
+                    let firstValue = firstCar.car[y1][x1]
+                    let secondValue = secondCar.car[y2][x2]
                     
                     if firstValue > 0 && secondValue > 0 {
                         return true

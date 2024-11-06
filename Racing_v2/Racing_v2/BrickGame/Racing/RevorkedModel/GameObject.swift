@@ -7,18 +7,6 @@
 
 import Foundation
 
-protocol GameObject {
-    var xPos: RacingInt { get set }
-    var yPos: RacingInt { get set }
-}
-
-protocol RacingCar: GameObject {
-    var car: GameCar { get }
-}   // protocol RacingCar
-
-protocol HasScorePrice {
-    func getPrice() -> UInt16
-}
 
 class GameCarFabric: GameObject, Identifiable {
     let id: ObjectIdentifier = ObjectIdentifier(RacingModel.self)
