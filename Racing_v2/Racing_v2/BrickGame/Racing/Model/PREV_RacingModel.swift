@@ -61,7 +61,7 @@ class PREV_RacingModel : PREV_GameModel {
         get { self._spawner }
         set {
             self._spawner = newValue
-            self._spawner.enemyType = [EnemyCar.self, SmallEnemy.self]
+            self._spawner.enemyType = [EnemyCar.self, /*SmallEnemy.self*/]
             self._spawner.racingModel = self
         }
     }

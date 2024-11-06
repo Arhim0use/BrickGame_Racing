@@ -77,30 +77,18 @@ class BaseEnemySpawner: EnemyCarSpawner {
     
 }    // BaseEnemySpawner
 
-class LeftSideSpawner: BaseEnemySpawner {
+class RandomSideSpawner: BaseEnemySpawner {
+    var onLeft = Bool.random()
 
     override func spawnLogic() {
-         let shift = Int.random(in: 0...1)
-         if 10 > Int.random(in: 0...99) {
-             racingModel.enemys.append(EnemyCar(xPos: 0 + shift))
-             racingModel.enemys.append(EnemyCar(xPos: 6 + shift))
-         } else {
-             racingModel.enemys.append(EnemyCar(xPos: 0 + shift))
-         }
+        var side = onLeft ? 0 : 5
+        
+        let shift = Int.random(in: 0...1)
+        if 10 > Int.random(in: 0...99) {
+         racingModel.enemys.append(EnemyCar(xPos: 0 + shift))
+         racingModel.enemys.append(EnemyCar(xPos: 6 + shift))
+        } else {
+         racingModel.enemys.append(EnemyCar(xPos: side + shift))
+        }
     }
-     
-}
-
-class RightSideSpawner: BaseEnemySpawner {
-
-    override func spawnLogic() {
-         let shift = Int.random(in: 0...1)
-         if 10 > Int.random(in: 0...99) {
-             racingModel.enemys.append(EnemyCar(xPos: 0 + shift))
-             racingModel.enemys.append(EnemyCar(xPos: 6 + shift))
-         } else {
-             racingModel.enemys.append(EnemyCar(xPos: 5 + shift))
-         }
-    }
-     
 }
