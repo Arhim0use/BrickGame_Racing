@@ -34,7 +34,6 @@ class BaseEnemySpawner: EnemyCarSpawner {
         print("🛑 BaseEnemySpawner deinit ")
     }
     
-    
     func spawn() {
         guard racingModel.enemys.count < 3
                 && racingModel.enemys.filter({ $0.yPos < 2 }).isEmpty
@@ -46,6 +45,23 @@ class BaseEnemySpawner: EnemyCarSpawner {
     }
     
     func spawnLogic() {
+
+    }
+    
+}    // BaseEnemySpawner
+
+class ClassicEnemySpawner: BaseEnemySpawner {
+    override func spawn() {
+        guard racingModel.enemys.count < 3
+                && racingModel.enemys.filter({ $0.yPos < 2 }).isEmpty
+        else {
+            return
+        }
+        
+        spawnLogic()
+    }
+    
+    override func spawnLogic() {
         if let newEnemy = spawnNext() {
             racingModel.enemys.append(newEnemy)
         } else if 10 > Int.random(in: 0...99) {
@@ -74,8 +90,7 @@ class BaseEnemySpawner: EnemyCarSpawner {
              
         return selectedType.init(xPos: xPosition, yPos: -7)
     }
-    
-}    // BaseEnemySpawner
+}
 
 class RandomSideSpawner: BaseEnemySpawner {
     var onLeft = Bool.random()
