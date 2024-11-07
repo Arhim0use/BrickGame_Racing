@@ -106,6 +106,17 @@ class RacingModel: GameModel, Identifiable {
         }
     }
     
+    func restart() {
+        score = 0
+        highScore = 0
+        level = 1
+        speed = 100
+        pause = 0
+        enemys.removeAll()
+        player = PlayerCar()
+        placeObjectOnField()
+    }
+    
     private func placeCarField(rCar: RacingCar) {
         for carRow in 0..<rCar.ySize {
             let fieldY = rCar.yPos + carRow
