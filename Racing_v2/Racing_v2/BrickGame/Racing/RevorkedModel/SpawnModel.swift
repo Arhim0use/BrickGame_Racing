@@ -22,7 +22,7 @@ class BaseEnemySpawner: EnemyCarSpawner {
 
     var racingModel: RacingModel
     
-    var enemyType: [any EnemyRacingCar.Type] = []
+    var enemyType: [EnemyRacingCar.Type] = []
     
     required init(racingModel: RacingModel) {
         self.racingModel = racingModel
@@ -96,7 +96,7 @@ class RandomSideSpawner: BaseEnemySpawner {
     var onLeft = Bool.random()
 
     override func spawnLogic() {
-        var side = onLeft ? 0 : 5
+        let side = onLeft ? 0 : 5
         
         let shift = Int.random(in: 0...1)
         if 10 > Int.random(in: 0...99) {
