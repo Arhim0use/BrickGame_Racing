@@ -114,7 +114,7 @@ class GameInfoWrapper {
             score: 0,
             high_score: 0,
             level: 1,
-            speed: 1,
+            speed: 100,
             pause: 0
         )
     }
