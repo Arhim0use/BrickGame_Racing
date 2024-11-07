@@ -10,6 +10,7 @@ import Foundation
 protocol LevelManager {
     var gameModel: GameModel { get set }
     func levelUp()
+    func restart()
 }
 
 class LevelHandler: LevelManager {
@@ -38,7 +39,14 @@ class LevelHandler: LevelManager {
         {
             let lvl = gameModel.score / Int32(RacingDefines.toNextLvl)
             model.gameInfoWrapper.gameInfo.level = lvl
-            model.gameInfoWrapper.gameInfo.speed += 50
+            model.gameInfoWrapper.gameInfo.speed += -7
+        }
+    }
+    
+    func restart() {
+        if let model = gameModel as? RacingModel {
+            model.gameInfoWrapper.gameInfo.level = 1
+            model.gameInfoWrapper.gameInfo.speed = 100
         }
     }
 }   //  class LevelManager
