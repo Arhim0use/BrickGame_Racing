@@ -71,6 +71,29 @@ enum UserAction: UInt16 {
             return Action
         }
     }
+
+    static func fromCAction(_ action: UserAction_t) -> UserAction? {
+        switch action {
+        case Start:
+            return .start
+        case Pause:
+            return .pause
+        case Terminate:
+            return .terminate
+        case Left:
+            return .moveLeft
+        case Right:
+            return .moveRight
+        case Up:
+            return .moveUp
+        case Down:
+            return .moveDown
+        case Action:
+            return.action
+        default:
+            return nil
+        }
+    }
 }
 
 class GameInfoWrapper {
