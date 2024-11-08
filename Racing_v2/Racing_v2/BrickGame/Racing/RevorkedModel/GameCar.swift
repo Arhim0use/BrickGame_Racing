@@ -95,7 +95,7 @@ class PlayerCar: GameCar {
         }
     }
     
-    required init(xPos: RacingInt = RacingDefines.xStartPos, yPos: RacingInt = RacingDefines.yStartPos - 6) {
+    required init(xPos: RacingInt = RacingDefines.xStartPos, yPos: RacingInt = RacingDefines.yStartPos + 6) {
         super.init(xPos: xPos, yPos: yPos, car: [[0, 1, 0],
                                                  [1, 1, 1],
                                                  [0, 1, 0],
