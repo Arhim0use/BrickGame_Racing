@@ -36,7 +36,15 @@ struct CarPrice {
 
 class GameCar: RacingCar {
     let id: ObjectIdentifier = ObjectIdentifier(RacingModel.self)
-    var xPos: RacingInt
+    private var _xPos: RacingInt
+    var xPos: RacingInt {
+        get { self._xPos }
+        set {
+            if newValue >= 0 && newValue < RacingDefines.yBorderSize {
+                self._xPos = newValue
+            }
+        }
+    }
     var yPos: RacingInt
     
     var car: [[RacingInt]]
@@ -52,7 +60,7 @@ class GameCar: RacingCar {
     var ySize: RacingInt { get { return car.count } }
     
     init(xPos: RacingInt, yPos: RacingInt, car: [[RacingInt]]) {
-        self.xPos = xPos
+        self._xPos = xPos
         self.yPos = yPos
         self.car = car
     }
