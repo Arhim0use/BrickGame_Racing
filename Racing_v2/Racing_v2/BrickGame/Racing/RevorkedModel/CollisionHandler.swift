@@ -43,6 +43,7 @@ class CollisionHandler: CollisionCars {
                 && racingModel.player.xPos + racingModel.player.xSize > enemy.xPos {
                 if isCollide(enemy) {
                     racingModel.player.isImmortal = true
+                    racingModel.lives -= 1
                     return true
                 }
             }
