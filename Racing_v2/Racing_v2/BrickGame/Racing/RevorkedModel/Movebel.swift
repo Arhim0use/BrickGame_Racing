@@ -32,11 +32,11 @@ class BasicMoveStrategyFabric: MoveStrategy {
     }
     
     func moveLeft() -> (xPos: RacingInt, yPos: RacingInt) {
-        return (1, 0)
+        return (-1, 0)
     }
     
     func moveRight() -> (xPos: RacingInt, yPos: RacingInt) {
-        return (-1, 0)
+        return (1, 0)
     }
 }
 
@@ -50,11 +50,11 @@ class ClassicMoveStrategy: BasicMoveStrategyFabric {
     }
     
     override func moveLeft() -> (xPos: RacingInt, yPos: RacingInt) {
-        return (3, 0)
+        return (-3, 0)
     }
     
     override func moveRight() -> (xPos: RacingInt, yPos: RacingInt) {
-        return (-3, 0)
+        return (3, 0)
     }
 }
 
@@ -77,12 +77,12 @@ class BasicMover: Movebel {
         self.moveSrategy = strategy
     }
     
-    func move(with input: UserAction) {
+    func move(with input: UserAction) -> GameObject {
         switch input {
         case .moveLeft:
             move(to: moveSrategy.moveLeft())
         case .moveRight:
-            move(to: moveSrategy.moveLeft())
+            move(to: moveSrategy.moveRight())
         case .moveUp:
             move(to: moveSrategy.moveForvard())
         case .moveDown:
@@ -90,10 +90,11 @@ class BasicMover: Movebel {
         default:
             break
         }
+        return object
     }
     
     func move(to position: (xPos: RacingInt, yPos: RacingInt)) {
-        object.xPos = position.xPos
-        object.yPos = position.yPos
+        object.xPos += position.xPos
+        object.yPos += position.yPos
     }
 }
