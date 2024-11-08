@@ -20,7 +20,7 @@ struct RacingDefines {
     static let yBorderSize: RacingInt = 20
     
     static var xStartPos: RacingInt { get { xBorderSize / 2 - 1 } }
-    static var yStartPos: RacingInt { get { yBorderSize - 1 } }
+    static var yStartPos: RacingInt { get { yBorderSize / 2 - 1 } }
     
     static let startSpeed = 500
     
