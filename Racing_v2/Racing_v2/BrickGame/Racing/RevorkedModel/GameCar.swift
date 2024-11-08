@@ -40,7 +40,7 @@ class GameCar: RacingCar {
     var xPos: RacingInt {
         get { self._xPos }
         set {
-            if newValue >= 0 && newValue < RacingDefines.yBorderSize {
+            if newValue >= 0 && newValue < RacingDefines.yBorderSize - xSize {
                 self._xPos = newValue
             }
         }
