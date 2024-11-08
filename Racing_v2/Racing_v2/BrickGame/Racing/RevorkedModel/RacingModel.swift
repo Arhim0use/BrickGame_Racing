@@ -69,7 +69,7 @@ class RacingModel: GameModel, Identifiable {
     var lives: RacingInt {
         get { _playerLives }
         set {
-            guard newValue < 0, _playerLives > 0 else {
+            guard newValue >= 0 else {
                 return
             }
             _playerLives = newValue
