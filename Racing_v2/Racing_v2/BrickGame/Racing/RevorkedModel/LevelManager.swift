@@ -17,7 +17,7 @@ class LevelHandler: LevelManager {
     var gameModel: GameModel
     
     deinit {
-        print("🛑 levelmanager deinit ")
+        print("🛑 Level manager deinit ")
     }
     
     required init(gameModel: GameModel) {

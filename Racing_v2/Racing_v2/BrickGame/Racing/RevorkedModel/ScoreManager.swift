@@ -25,7 +25,7 @@ class ScoreManager: Scorable, RacingScoreManager {
     }
     
     deinit {
-        print("🛑 levelmanager deinit")
+        print("🛑 Score manager deinit")
     }
     
     func addPoints() {

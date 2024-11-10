@@ -76,7 +76,9 @@ class BasicMover: Movebel {
         self.object = object
         self.moveSrategy = strategy
     }
-    
+    deinit {
+        print("🛑 BasicMover deinit")
+    }
     func move(with input: UserAction) -> GameObject {
         switch input {
         case .moveLeft:
