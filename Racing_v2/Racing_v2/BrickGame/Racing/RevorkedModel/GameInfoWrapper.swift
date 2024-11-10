@@ -72,7 +72,7 @@ enum UserAction: UInt16 {
         }
     }
 
-    static func fromCAction(_ action: UserAction_t) -> UserAction? {
+    static func fromCAction(_ action: UserAction_t?) -> UserAction? {
         switch action {
         case Start:
             return .start
