@@ -59,7 +59,6 @@ class BrickGameStateMachine : FinalStateMachine {
             end()
             break
         }
-//        return gameModel.updateGameInfo()
     }
 
     func setState(_ newState: BrickGameGameState) {
@@ -85,23 +84,6 @@ class BrickGameStateMachine : FinalStateMachine {
     func collision() { }
 
     func end() { }
-    
-//    private func isSameModel(newModel: RacingModel?) -> Bool {
-//        if let newModel = newModel, let racingModel = self.gameModel as? RacingModel, racingModel == newModel {
-//            return true
-//        }
-//        return false
-//    }
-//
-///          case .end:
-///            racingModelInteraction { model in
-///                model.gameInfoWrapper.gameState = .gameEnd
-///            }
-//    private func racingModelInteraction(_ interaction: (RacingModel) -> ()) {
-//        if let model = gameModel as? RacingModel {
-//            interaction(model)
-//        }
-//    }
 }   // class BrickGameStateMachine
 
 class RacingStateMachine: BrickGameStateMachine {
