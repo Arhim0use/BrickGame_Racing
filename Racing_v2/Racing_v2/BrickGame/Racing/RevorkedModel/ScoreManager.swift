@@ -30,12 +30,12 @@ class ScoreManager: Scorable, RacingScoreManager {
     
     func addPoints() {
         for (pos, enemy) in racingModel.enemys.enumerated() {
-            if enemy.yPos >= RacingDefines.yBorderSize {
+            if enemy.yPos > RacingDefines.yBorderSize {
                 let points = addPoints(enemyType: type(of: racingModel.enemys[pos]))
-                racingModel.enemys.remove(at: pos)
                 racingModel.score += Int32(points)
             }
         }
+        racingModel.enemys.removeAll(where: { $0.yPos > RacingDefines.yBorderSize })
     }
     
     /// - Note: calculate the price for enemy car
