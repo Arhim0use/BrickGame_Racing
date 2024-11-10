@@ -20,15 +20,15 @@ protocol BricGameViewModel {
     var level: RacingInt { get }
     var speed: RacingInt { get }
     
-    func startGame()
-    func pauseGame()
-    func userInput(with action: UserAction_t)
-    func endGame()
+    func startGame(with action: UserAction?)
+    func pauseGame(with action: UserAction?)
+    func runGame(with action: UserAction?)
+    func userInput(with action: UserAction_t?)
+    func endGame(with action: UserAction?)
 }
 
+@available(macOS 10.15, *)
 class RacingViewModel: ObservableObject, BricGameViewModel {
-    
-    private(set) var currentState: BrickGameGameState = .pause
     
     private(set) var model: RacingModel = RacingModel() {
         willSet {
@@ -67,17 +67,19 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
 
 //    var higscoreManager: HigscoreManager
     
-    var gameState: BrickGameGameState { get { fsm.currentState } }
+    var currentState: BrickGameGameState { get { fsm.currentState } }
     
     var lives: RacingInt { get { model.lives } }
     
     var level: RacingInt { get { RacingInt(gameInfo.level) } }
     
-    var speed: RacingInt { get { RacingInt(model.speed) } }
+    var speed: RacingInt { get { RacingInt(1000 / gameInfo.speed)} }
 
     var score: RacingInt { get { RacingInt(gameInfo.score) } }
+    
+    var frameDelay: RacingInt { get { RacingInt(gameInfo.speed) } }
 
-    var gameInfo: GameInfo_t { get { model.gameInfo } }
+    @Published private(set) var gameInfo: GameInfo_t
 
     var highscore: String = ""
     
@@ -86,7 +88,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         scoreManager = ScoreManager(racingModel: self.model)
         collisionHandler = CollisionHandler(racingModel: self.model)
         mover = BasicMover(object: self.model.player, strategy: OneAxisMoveStrategy())
-        spawner = RandomSideSpawner(racingModel: self.model)
+        spawner = ClassicEnemySpawner(racingModel: self.model)
         
         fsm = RacingStateMachine(scoreManager: self.scoreManager,
                                  spawner: self.spawner,
@@ -94,22 +96,54 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
                                  colisionHandler: self.collisionHandler,
                                  mover: self.mover,
                                  racingModel: self.model)
+        gameInfo = GameInfoWrapper().gameInfo
     }
-    
-    func startGame() {
+    deinit {
+        print("🛑 RacingViewModel deinit")
+    }
+    func startGame(with action: UserAction?) {
+        guard action == .start else {
+            return
+        }
         fsm.start()
     }
     
-    func pauseGame() {
-        fsm.pause()
+    func pauseGame(with action: UserAction?) {
+        guard action == .pause else {
+            return
+        }
+        if currentState == .pause {
+            fsm.resume()
+        } else {
+            fsm.pause()
+        }
     }
     
-    func userInput(with action: UserAction_t) {
-        fsm.loop(UserAction.fromCAction(action))
-        model.placeObjectOnField()
+    func userInput(with action: UserAction_t?) {
+        runGame(with: UserAction.fromCAction(action))
+
+        gameInfo = model.placeObjectOnField()
     }
     
-    func endGame() {
+    func runGame(with action: UserAction?) {
+        switch action {
+        case .start:
+            startGame(with: action)
+        case .terminate:
+            endGame(with: action)
+        case .pause:
+            
+            pauseGame(with: action)
+        default:
+            fsm.loop(action)
+        }
+    }
+    
+    func endGame(with action: UserAction?) {
+        guard action == .terminate else {
+            return
+        }
+        fsm.setState(.end)
         if let hScore = RacingInt(highscore.components(separatedBy: "\n").first?.components(separatedBy: " ").first ?? "0"),
            hScore > score {
             print("Higscore:", highscore)

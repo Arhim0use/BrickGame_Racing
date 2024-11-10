@@ -16,7 +16,7 @@ protocol GameModel: AnyObject {
     var speed: Int32 { get }
     var pause: Int32  { get }
     
-    func placeObjectOnField()
+    func placeObjectOnField() -> GameInfo_t
 }
 
 extension RacingModel: Equatable {
@@ -89,13 +89,15 @@ class RacingModel: GameModel, Identifiable {
     var speed: Int32 {
         get { gameInfo.speed }
         set {
-            gameInfoWrapper.gameInfo.speed = newValue
+            if newValue > 1 {
+                gameInfoWrapper.gameInfo.speed = newValue
+            }
         }
     }
     
-    func placeObjectOnField() {
+    func placeObjectOnField() -> GameInfo_t {
         guard gameInfoWrapper.matrixIsAllocate() else {
-            return
+            return gameInfo
         }
         
         clearField()
@@ -104,9 +106,11 @@ class RacingModel: GameModel, Identifiable {
         for enemy in enemys {
             placeCarField(rCar: enemy)
         }
+        return gameInfo
     }
     
     func restart() {
+        lives = RacingDefines.startLiveCount
         score = 0
         highScore = 0
         level = 1
@@ -114,7 +118,7 @@ class RacingModel: GameModel, Identifiable {
         pause = 0
         enemys.removeAll()
         player = PlayerCar()
-        placeObjectOnField()
+        gameInfoWrapper.gameInfo = placeObjectOnField()
     }
     
     private func placeCarField(rCar: RacingCar) {
