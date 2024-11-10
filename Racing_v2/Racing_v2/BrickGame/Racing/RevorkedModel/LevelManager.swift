@@ -35,12 +35,14 @@ class LevelHandler: LevelManager {
     
     func changeLVL() {
         if let model = gameModel as? RacingModel,
-            RacingInt(gameModel.score) % RacingDefines.toNextLvl == 0 &&
-            gameModel.level < RacingDefines.maxLevel
-        {
+            RacingInt(gameModel.score) % RacingDefines.toNextLvl == 0 {
             let lvl = gameModel.score / Int32(RacingDefines.toNextLvl)
-            model.gameInfoWrapper.gameInfo.level = lvl
-            model.gameInfoWrapper.gameInfo.speed += -7
+            if lvl > 1 && lvl <= RacingDefines.maxLevel {
+                if lvl != model.level {
+                    model.gameInfoWrapper.gameInfo.speed += -9
+                }
+                model.gameInfoWrapper.gameInfo.level = lvl
+            }
         }
     }
     
