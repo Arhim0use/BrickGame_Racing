@@ -41,14 +41,14 @@ class BrickGameStateMachine : FinalStateMachine {
             pause()
             
         case .spawn:
-            BrickGameStateMachine.lastInput = input != nil ? input : nil
+            lastInputUpdate(with: input)
             _currentState = .moving
             spawn()
             
         case .moving:
-            BrickGameStateMachine.lastInput = input != nil ? input : nil
+            lastInputUpdate(with: input)
             _currentState = .collision
-            moving(with: input)
+            moving(with: BrickGameStateMachine.lastInput)
             
         case .collision:
             BrickGameStateMachine.lastInput = nil
@@ -65,7 +65,15 @@ class BrickGameStateMachine : FinalStateMachine {
     func setState(_ newState: BrickGameGameState) {
         _currentState = newState
     }
-
+    
+    private func lastInputUpdate(with input: UserAction?) {
+        guard input != nil else {
+            return
+        }
+        
+        BrickGameStateMachine.lastInput = input
+    }
+    
     func start() { }
     
     func pause() { }
@@ -120,14 +128,15 @@ class RacingStateMachine: BrickGameStateMachine {
     
     override func start() {
         racingModel.restart()
+        setState(.spawn)
     }
     
     override func pause() {
-        if currentState == .pause {
-            setState(.collision)
-        } else {
-            setState(.pause)
-        }
+        setState(.pause)
+    }
+    
+    func resume() {
+        setState(.collision)
     }
 
     override func spawn() {
