@@ -9,6 +9,20 @@ import Foundation
 
 fileprivate var loop = 0
 fileprivate let input: UserAction? = nil
+fileprivate var cInput: Action? = Action( UInt32.random(in: 3...7))
+
+fileprivate func moveEnemys(_ model: RacingModel) {
+    for var enemy in model.enemys {
+        enemy.yPos += 1
+    }
+}
+
+fileprivate func countedCikle(loops: Int, doSomthing: () -> ()) {
+    while loop < loops {
+        doSomthing()
+        loop += 1
+    }
+}
 
 print("Hello, World!")
 
@@ -21,17 +35,61 @@ print("Hello, World!")
 //        loop += 1
 //    }
 //}
-do {
-    let model = RacingModel()
-    let spawner = BaseEnemySpawner(racingModel: model)
-    
-    while loop < 3 && model.enemys.isEmpty {
-        spawner.spawn()
-        loop += 1
-    }
-    
-    
-//    print("1 print(model.enemys.count", model.enemys.count)
+
+//do {
+//    let model = RacingModel()
+//    let spawner = RightSideSpawner(racingModel: model)
 //    
-//    print("2 print(model.enemys.count", spawner.racingModel!.enemys.count)
-}
+//    while loop < 50 {
+//        spawner.spawn()
+//        loop += 1
+//        moveEnemys(model)
+//        model.placeObjectOnField()
+//        model.gameInfoWrapper.printField()
+//    }
+//}
+
+//do {
+//    let model = RacingModel()
+//    let fsm = RacingStateMachine(gameModel: model)
+//    fsm.spawner = BaseEnemySpawner(racingModel: model)
+//    fsm.collisionHandler = CollisionHandler(racingModel: model)
+//    fsm.start()
+//    
+//    countedCikle(loops: 90) {
+//        if fsm.currentState != .end {
+//            fsm.gameLoop(input)
+//            if loop % 3 == 0 {
+//                print("loop", loop)
+//            }
+//        }
+//    }
+//    
+//}
+
+
+//do {
+//    let viewModel = RacingViewModel()
+//    viewModel.startGame()
+//    while viewModel.gameState != .end && loop < 4 {
+//        if loop <= 2 {
+//            cInput = Action(UInt32.random(in: 3...7))
+//        } else {
+//            cInput = nil
+//        }
+//        viewModel.userInput(with: cInput)
+//        viewModel.model.gameInfoWrapper.printField()
+//        print("state", viewModel.fsm.currentState)
+//        //        if let f = viewModel.model.enemys.first {
+//        //            print("enemys.first", f.yPos)
+//        //        }
+//        print("lastInput", BrickGameStateMachine.lastInput ?? "nil")
+////        print("level", viewModel.model.level)
+////        print("score", viewModel.model.score)
+//        
+//        
+//        loop += 1
+// 
+//    }
+//    viewModel.endGame()
+//}
