@@ -24,6 +24,10 @@ class BaseEnemySpawner: EnemyCarSpawner {
     
     var enemyType: [EnemyRacingCar.Type] = []
     
+    var maxEnemyCount = 5
+    var minOffset = 3
+    var doubleCarChanse: UInt8 = 10
+    
     required init(racingModel: RacingModel) {
         self.racingModel = racingModel
         enemyType.append(EnemyCar.self)
@@ -48,26 +52,31 @@ class BaseEnemySpawner: EnemyCarSpawner {
 
     }
     
+    
+    fileprivate func doubleCar(_ shift: Int) {
+        racingModel.enemys.append(EnemyCar(xPos: 0 + shift, yPos: -7 + Int.random(in: 0...1)))
+        racingModel.enemys.append(EnemyCar(xPos: 6 + shift, yPos: -7 + Int.random(in: 0...1)))
+    }
+
 }    // BaseEnemySpawner
 
 class ClassicEnemySpawner: BaseEnemySpawner {
     override func spawn() {
-        guard racingModel.enemys.count < 3
-                && racingModel.enemys.filter({ $0.yPos < 2 }).isEmpty
+        guard racingModel.enemys.count < maxEnemyCount
+                && racingModel.enemys.filter({ $0.yPos < minOffset }).isEmpty
         else {
             return
         }
         
         spawnLogic()
     }
-    
+
     override func spawnLogic() {
         if let newEnemy = spawnNext() {
             racingModel.enemys.append(newEnemy)
-        } else if 10 > Int.random(in: 0...99) {
+        } else if doubleCarChanse > Int.random(in: 0...99) {
             let shift = Int.random(in: 0...1)
-            racingModel.enemys.append(EnemyCar(xPos: 0 + shift))
-            racingModel.enemys.append(EnemyCar(xPos: 6 + shift))
+            doubleCar(shift)
         }
         
         if racingModel.enemys.count == 0 {
@@ -99,9 +108,8 @@ class RandomSideSpawner: BaseEnemySpawner {
         let side = onLeft ? 0 : 5
         
         let shift = Int.random(in: 0...1)
-        if 10 > Int.random(in: 0...99) {
-         racingModel.enemys.append(EnemyCar(xPos: 0 + shift))
-         racingModel.enemys.append(EnemyCar(xPos: 6 + shift))
+        if doubleCarChanse > Int.random(in: 0...99) {
+            doubleCar(shift)
         } else {
          racingModel.enemys.append(EnemyCar(xPos: side + shift))
         }
