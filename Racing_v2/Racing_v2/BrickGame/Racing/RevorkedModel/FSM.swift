@@ -132,9 +132,9 @@ class RacingStateMachine: BrickGameStateMachine {
                 racingModel.player = player
             }
         default:
-            for var enemy in racingModel.enemys {
-                enemy.yPos += 1
-            }
+//            for var enemy in racingModel.enemys {
+//                enemy.yPos += 1
+//            }
             scoreManager.addPoints()
             lvlManager.levelUp()
         }

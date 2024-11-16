@@ -59,6 +59,9 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
             fsm.scoreManager = newValue
         }
     }
+    
+    private(set) var enemyMover: EnemyMover
+    
     private(set) var collisionHandler: CollisionHandler {
         willSet {
             fsm.colisionHandler = newValue
@@ -106,6 +109,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
             return
         }
         fsm.start()
+        enemyMover.startEnemyMovement()
     }
     
     func pauseGame(with action: UserAction?) {
@@ -117,6 +121,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         } else {
             fsm.pause()
         }
+        enemyMover.pauseEnemyMovement(with: currentState)
     }
     
     func userInput(with action: UserAction_t?) {

@@ -100,3 +100,48 @@ class BasicMover: Movebel {
         object.yPos += position.yPos
     }
 }
+
+class EnemyMover {
+    var model: RacingModel
+    var dispatchTimer: DispatchSourceTimer?
+    var frameDeley: TimeInterval { Double(model.speed) / 500 }
+    
+    init(model: RacingModel) {
+        self.model = model
+    }
+    
+    func startEnemyMovement() {
+        stopEnemyMovement()
+        setupTimer(with: frameDeley)
+    }
+    
+    func stopEnemyMovement() {
+        dispatchTimer?.cancel()
+        dispatchTimer = nil
+    }
+    
+    private func setupTimer(with interval: TimeInterval) {
+        let queue = DispatchQueue.global(qos: .background)
+        dispatchTimer = DispatchSource.makeTimerSource(queue: queue)
+        dispatchTimer?.schedule(deadline: .now(), repeating: interval)
+        dispatchTimer?.setEventHandler { [weak self] in
+            self?.moveEnemys()
+        }
+        dispatchTimer?.resume()
+    }
+    
+    private func moveEnemys() {
+        for i in 0..<model.enemys.count {
+            model.enemys[i].yPos += 1
+        }
+    }
+    
+    func pauseEnemyMovement(with state: BrickGameGameState) {
+        if state == .pause {
+            stopEnemyMovement()
+        } else {
+            startEnemyMovement()
+        }
+    }
+}
+
