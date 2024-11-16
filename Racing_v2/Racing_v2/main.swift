@@ -93,3 +93,22 @@ print("Hello, World!")
 //    }
 //    viewModel.endGame()
 //}
+
+do {
+    let viewModel = RacingViewModel()
+    viewModel.userInput(with: Start)
+    
+    while viewModel.currentState != .end && loop < 1000 {
+        if loop <= 2 {
+            cInput = Action(UInt32.random(in: 3...7))
+        } else {
+            cInput = nil
+        }
+        viewModel.userInput(with: nil)
+        if let f = viewModel.model.enemys.first {
+            print(f.yPos)
+        }
+//        print(viewModel.model.player.xPos)
+        loop += 1
+    }
+}
