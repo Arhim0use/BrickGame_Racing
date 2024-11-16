@@ -68,7 +68,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         }
     }
 
-//    var higscoreManager: HigscoreManager
+    private var dataBase: BrickGameDataSource? = nil
     
     var currentState: BrickGameGameState { get { fsm.currentState } }
     
@@ -77,14 +77,14 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     var level: RacingInt { get { RacingInt(gameInfo.level) } }
     
     var speed: RacingInt { get { RacingInt(1000 / gameInfo.speed)} }
-
+    
     var score: RacingInt { get { RacingInt(gameInfo.score) } }
     
     var frameDelay: RacingInt { get { RacingInt(gameInfo.speed) } }
-
+    
     @Published private(set) var gameInfo: GameInfo_t
-
-    var highscore: String = ""
+    
+    var highscore: String { get { String(getHighscore()) } }
     
     init() {
         lvlManager = LevelHandler(gameModel: self.model)
@@ -92,6 +92,13 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         collisionHandler = CollisionHandler(racingModel: self.model)
         mover = BasicMover(object: self.model.player, strategy: OneAxisMoveStrategy())
         spawner = ClassicEnemySpawner(racingModel: self.model)
+        enemyMover = EnemyMover(model: self.model)
+        
+        do {
+            self.dataBase = try BrickGameDataSource()
+            //            try dataBase?.deleteAll()
+            
+        } catch { }
         
         fsm = RacingStateMachine(scoreManager: self.scoreManager,
                                  spawner: self.spawner,
@@ -100,6 +107,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
                                  mover: self.mover,
                                  racingModel: self.model)
         gameInfo = GameInfoWrapper().gameInfo
+        initHigscore()
     }
     deinit {
         print("🛑 RacingViewModel deinit")
@@ -108,6 +116,11 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         guard action == .start else {
             return
         }
+        do {
+            try dataBase?.create(new: PersonHighscore(name: "AAAAA"))
+        } catch { }
+        initHigscore()
+        
         fsm.start()
         enemyMover.startEnemyMovement()
     }
@@ -126,7 +139,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     
     func userInput(with action: UserAction_t?) {
         runGame(with: UserAction.fromCAction(action))
-
+        
         gameInfo = model.placeObjectOnField()
     }
     
@@ -137,10 +150,10 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         case .terminate:
             endGame(with: action)
         case .pause:
-            
             pauseGame(with: action)
         default:
             fsm.loop(action)
+            updateHighscore()
         }
     }
     
@@ -148,10 +161,43 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         guard action == .terminate else {
             return
         }
-        fsm.setState(.end)
-        if let hScore = RacingInt(highscore.components(separatedBy: "\n").first?.components(separatedBy: " ").first ?? "0"),
-           hScore > score {
-            print("Higscore:", highscore)
+        fsm.end()
+        enemyMover.stopEnemyMovement()
+        updateHighscore()
+    }
+    
+    func getHighscore() -> Int32 {
+        updateHighscore()
+        
+        return model.highScore
+    }
+    
+    func updateHighscore() {
+        guard score > model.highScore else {
+            return
+        }
+        
+        model.highScore = Int32(score)
+        
+        guard let dataBase = self.dataBase else {
+            return
+        }
+        
+        do {
+            if let top = BDHighscoreDecoder().toIntArr(top: 1, of: dataBase.readAll()).first {
+                model.highScore = Int32(top)
+            }
+            try dataBase.updateLast(with: score)
+        } catch { }
+    }
+    
+    func initHigscore() {
+        guard let dataBase = self.dataBase else {
+            return
+        }
+        
+        if let top = BDHighscoreDecoder().toIntArr(top: 1, of: dataBase.readAll()).first {
+            model.highScore = Int32(top)
         }
     }
 }

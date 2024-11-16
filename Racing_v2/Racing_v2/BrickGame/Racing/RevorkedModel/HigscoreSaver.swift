@@ -9,18 +9,18 @@ import Foundation
 
 import RealmSwift
 
-class PersonHigscore: Object, Identifiable {
+class PersonHighscore: Object, Identifiable {
     @Persisted(primaryKey: true) var id = UUID()
     @Persisted var name = ""
     @Persisted var score = 0
-    @Persisted var date = Date.now
+    @Persisted var date = Date()
     
     convenience init(name: String = "", score: Int = 0) {
         self.init()
         self.name = name
         self.score = score
         self.id = UUID()
-        self.date = Date.now
+        self.date = Date()
     }
 }
 
@@ -38,13 +38,32 @@ class BrickGameDataSource {
         }
     }
     
-    func readAll() -> Results<PersonHigscore> {
-        return realm.objects(PersonHigscore.self)
+    func readAll() -> Results<PersonHighscore> {
+        return realm.objects(PersonHighscore.self)
     }
     
-    func read(where property: Any) -> Results<PersonHigscore> {
+    func read(where property: Any) -> Results<PersonHighscore> {
         let all = readAll()
         return all.where { $0.name == property as? String ?? "" }
+    }
+    
+    func updateLast(with newScore: Int) throws {
+        let scores = readAll()
+        if let toUpdate = scores.last {
+            try realm.write {
+                toUpdate.score = newScore
+//                toUpdate.date = Date.now
+            }
+        }
+    }
+    
+    func updateLast(with newName: String) throws {
+        let scores = readAll()
+        if let toUpdate = scores.last {
+            try realm.write {
+                toUpdate.name = newName
+            }
+        }
     }
     
     func deleteAll() throws {
@@ -54,48 +73,27 @@ class BrickGameDataSource {
     }
 }
 
-protocol DataExchangebel {
-    func create(name: String, score: Int32)
-    func readAll() -> String
-    func read(where name: String) -> String
-    func deleteAll()
-}
-
-class BDHigscoreDecoder: DataExchangebel {
-    private let realmDS: BrickGameDataSource
+class BDHighscoreDecoder {
+    static var maxTop: UInt32 = 3
     
-    init() throws {
-        self.realmDS = try BrickGameDataSource()
-    }
-    
-    func create(name: String, score: Int32) {
-        do {
-            try realmDS.create(new: PersonHigscore(name: name, score: Int(score)))
-        } catch { }
-    }
-    
-    private func convertToStr(_ data: Results<PersonHigscore>, _ maxLengh: Int) -> String {
-        return data.prefix(maxLengh).map { person in
+    /// - Returns: sorted top of  person scores with name
+    func toStr(top maxLengh: UInt32 = maxTop, of data: Results<PersonHighscore>, delimeter: String = "\n ") -> String {
+        let sorted = data.sorted(by: \PersonHighscore.score, ascending: false)
+        
+        return get(top: maxLengh, of: sorted).map { person in
             return "\(person.name) \(person.score)"
-        }.joined(separator: "\n")
+        }.joined(separator: delimeter)
     }
     
-    func readAll() -> String {
-        let data = realmDS.readAll().sorted(by: \PersonHigscore.score, ascending: false)
-        
-        return convertToStr(data, 3)
+    /// - Returns: sorted top of  person scores
+    func toIntArr(top maxLengh: UInt32 = maxTop, of data: Results<PersonHighscore>) -> [Int] {
+        let sorted = data.sorted(by: \PersonHighscore.score, ascending: false)
+
+        let res = get(top: maxLengh, of: sorted).map { $0.score }
+        return Array(res)
     }
     
-    func read(where name: String) -> String {
-        let data = realmDS.read(where: name).sorted(by: \PersonHigscore.score, ascending: false)
-        
-        return convertToStr(data, 3)
-    }
-    
-    func deleteAll() {
-        do {
-            try realmDS.deleteAll()
-        } catch { }
+    private func get(top maxLengh: UInt32 = maxTop, of data: Results<PersonHighscore>) -> Slice<Results<PersonHighscore>> {
+        return data.prefix(Int(maxLengh))
     }
 }
-
