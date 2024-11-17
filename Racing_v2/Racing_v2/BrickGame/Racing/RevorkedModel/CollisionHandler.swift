@@ -31,8 +31,6 @@ class CollisionHandler: CollisionCars {
     /// - Note: check all enemy car with player, also check player imortal state
     func check() -> Bool {
 
-//        guard let model = racingModel else { return true }
-
         guard !racingModel.player.isImmortal else {
             racingModel.player.reduceImmortality()
             return false

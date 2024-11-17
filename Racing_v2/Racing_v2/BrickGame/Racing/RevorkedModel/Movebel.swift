@@ -104,7 +104,7 @@ class BasicMover: Movebel {
 class EnemyMover {
     var model: RacingModel
     var dispatchTimer: DispatchSourceTimer?
-    var frameDeley: TimeInterval { Double(model.speed) / 500 }
+    var frameDeley: TimeInterval { Double(model.speed) / 250 }
     
     init(model: RacingModel) {
         self.model = model
@@ -118,6 +118,17 @@ class EnemyMover {
     func stopEnemyMovement() {
         dispatchTimer?.cancel()
         dispatchTimer = nil
+    }
+    
+    /// - Note: need observer to change speed for _re_ startEnemyMovement()
+    func speedUp(_ action: UserAction?) -> Int32 {
+        let lvl = Int(model.gameInfo.level)
+        if action == .moveUp && model.speed != RacingDefines.speedArr[lvl] {
+            model.speed = RacingDefines.speedArr[lvl]
+        } else if model.speed != RacingDefines.speedArr[lvl - 1] {
+            model.speed = RacingDefines.speedArr[lvl - 1]
+        }
+        return model.gameInfo.speed
     }
     
     private func setupTimer(with interval: TimeInterval) {

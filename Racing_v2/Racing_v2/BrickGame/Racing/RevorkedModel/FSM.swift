@@ -132,24 +132,21 @@ class RacingStateMachine: BrickGameStateMachine {
                 racingModel.player = player
             }
         default:
-//            for var enemy in racingModel.enemys {
-//                enemy.yPos += 1
-//            }
-            scoreManager.addPoints()
-            lvlManager.levelUp()
+            break
         }
+        scoreManager.addPoints()
+        lvlManager.levelUp()
     }
 
     override func collision() {
         if colisionHandler.check() && racingModel.lives == 0 {
-            setState(.end)
             end()
         }
     }
 
     override func end() {
-        print("Save score and update higscore")
+        setState(.end)
     }
-}
+}    // class RacingStateMachine
 
 

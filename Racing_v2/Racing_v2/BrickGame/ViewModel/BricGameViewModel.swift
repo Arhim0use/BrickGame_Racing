@@ -76,18 +76,24 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     
     var level: RacingInt { get { RacingInt(gameInfo.level) } }
     
-    var speed: RacingInt { get { RacingInt(1000 / gameInfo.speed)} }
+    var speed: RacingInt { get { RacingInt(2500 / gameInfo.speed)} }
     
     var score: RacingInt { get { RacingInt(gameInfo.score) } }
     
     var frameDelay: RacingInt { get { RacingInt(gameInfo.speed) } }
-    
-    @Published private(set) var gameInfo: GameInfo_t
+
+    @Published private(set) var gameInfo: GameInfo_t {
+        didSet {
+            if oldValue.speed != gameInfo.speed {
+                enemyMover.startEnemyMovement()
+            }
+        }
+    }
     
     var highscore: String { get { String(getHighscore()) } }
     
     init() {
-        lvlManager = LevelHandler(gameModel: self.model)
+        lvlManager = LVLHandler(gameModel: self.model)
         scoreManager = ScoreManager(racingModel: self.model)
         collisionHandler = CollisionHandler(racingModel: self.model)
         mover = BasicMover(object: self.model.player, strategy: OneAxisMoveStrategy())
@@ -112,6 +118,8 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     deinit {
         print("🛑 RacingViewModel deinit")
     }
+    
+    /// - Note: TODO при рестарте либо удалять highscore либо давать Дефолт имя "..." последнему игроку
     func startGame(with action: UserAction?) {
         guard action == .start else {
             return
@@ -119,10 +127,10 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         do {
             try dataBase?.create(new: PersonHighscore(name: "AAAAA"))
         } catch { }
-        initHigscore()
         
         fsm.start()
         enemyMover.startEnemyMovement()
+        initHigscore()
     }
     
     func pauseGame(with action: UserAction?) {
@@ -139,7 +147,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
     
     func userInput(with action: UserAction_t?) {
         runGame(with: UserAction.fromCAction(action))
-        
+
         gameInfo = model.placeObjectOnField()
     }
     
@@ -152,6 +160,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         case .pause:
             pauseGame(with: action)
         default:
+            model.speed = enemyMover.speedUp(action)
             fsm.loop(action)
             updateHighscore()
         }
@@ -166,13 +175,13 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         updateHighscore()
     }
     
-    func getHighscore() -> Int32 {
+    private func getHighscore() -> Int32 {
         updateHighscore()
         
         return model.highScore
     }
     
-    func updateHighscore() {
+    private func updateHighscore() {
         guard score > model.highScore else {
             return
         }
@@ -191,7 +200,7 @@ class RacingViewModel: ObservableObject, BricGameViewModel {
         } catch { }
     }
     
-    func initHigscore() {
+    private func initHigscore() {
         guard let dataBase = self.dataBase else {
             return
         }

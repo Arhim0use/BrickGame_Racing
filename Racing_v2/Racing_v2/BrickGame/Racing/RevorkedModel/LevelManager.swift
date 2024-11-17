@@ -49,7 +49,28 @@ class LevelHandler: LevelManager {
     func restart() {
         if let model = gameModel as? RacingModel {
             model.gameInfoWrapper.gameInfo.level = 1
-            model.gameInfoWrapper.gameInfo.speed = 100
+            model.gameInfoWrapper.gameInfo.speed = RacingDefines.startSpeed
         }
     }
 }   //  class LevelManager
+
+class LVLHandler: LevelHandler {
+    override func changeLVL() {
+        guard let model = gameModel as? RacingModel,
+              model.level <= RacingDefines.maxLevel else { return }
+        
+        let lvl = RacingInt(gameModel.score) / RacingDefines.toNextLvl
+        if lvl < RacingDefines.speedArr.count - 1, lvl + 1 != model.level {
+            model.gameInfoWrapper.gameInfo.speed = RacingDefines.speedArr[lvl]
+            model.gameInfoWrapper.gameInfo.level = Int32(lvl + 1)
+        }
+    }
+    
+    override func restart() {
+        if let model = gameModel as? RacingModel {
+            model.gameInfoWrapper.gameInfo.level = 1
+            model.gameInfoWrapper.gameInfo.speed = RacingDefines.startSpeed
+        }
+    }
+}
+

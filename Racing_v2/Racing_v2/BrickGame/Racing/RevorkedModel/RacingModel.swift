@@ -114,7 +114,7 @@ class RacingModel: GameModel, Identifiable {
         score = 0
         highScore = 0
         level = 1
-        speed = 100
+        speed = RacingDefines.startSpeed
         pause = 0
         enemys.removeAll()
         player = PlayerCar()

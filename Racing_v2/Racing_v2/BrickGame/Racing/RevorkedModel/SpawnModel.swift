@@ -39,8 +39,8 @@ class BaseEnemySpawner: EnemyCarSpawner {
     }
     
     func spawn() {
-        guard racingModel.enemys.count < 3
-                && racingModel.enemys.filter({ $0.yPos < 2 }).isEmpty
+        guard racingModel.enemys.count < maxEnemyCount
+                && racingModel.enemys.filter({ $0.yPos < minOffset }).isEmpty
         else {
             return
         }
@@ -61,15 +61,6 @@ class BaseEnemySpawner: EnemyCarSpawner {
 }    // BaseEnemySpawner
 
 class ClassicEnemySpawner: BaseEnemySpawner {
-    override func spawn() {
-        guard racingModel.enemys.count < maxEnemyCount
-                && racingModel.enemys.filter({ $0.yPos < minOffset }).isEmpty
-        else {
-            return
-        }
-        
-        spawnLogic()
-    }
 
     override func spawnLogic() {
         if let newEnemy = spawnNext() {

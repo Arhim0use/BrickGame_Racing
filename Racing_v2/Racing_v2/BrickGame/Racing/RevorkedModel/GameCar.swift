@@ -82,7 +82,7 @@ class PlayerCar: GameCar {
           get { _isImmortal > 0 }
           set {
               if newValue {
-                  self._isImmortal = RacingDefines.immortalFrames // Устанавливаем количество кадров для неуязвимости
+                  self._isImmortal = RacingDefines.immortalFrames
               } else {
                   self._isImmortal = 0
               }
