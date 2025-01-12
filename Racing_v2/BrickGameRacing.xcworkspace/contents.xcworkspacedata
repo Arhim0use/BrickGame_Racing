@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:Makefile">
+   </FileRef>
+   <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <Group
+      location = "group:gui"
+      name = "gui">
+      <FileRef
+         location = "group:Cli">
+      </FileRef>
+   </Group>
+   <Group
+      location = "group:brick_game"
+      name = "brick_game">
+      <Group
+         location = "group:Server"
+         name = "Server">
+         <FileRef
+            location = "group:BrickGameServ">
+         </FileRef>
+      </Group>
+      <Group
+         location = "group:Web-gui"
+         name = "Web-gui">
+         <FileRef
+            location = "group:game.js">
+         </FileRef>
+         <FileRef
+            location = "group:index.html">
+         </FileRef>
+         <FileRef
+            location = "group:styles.css">
+         </FileRef>
+         <FileRef
+            location = "group:readme.md">
+         </FileRef>
+         <Group
+            location = "group:src"
+            name = "src">
+            <FileRef
+               location = "group:game-board.js">
+            </FileRef>
+            <FileRef
+               location = "group:tile.js">
+            </FileRef>
+            <FileRef
+               location = "group:config.js">
+            </FileRef>
+            <FileRef
+               location = "group:utils.js">
+            </FileRef>
+         </Group>
+      </Group>
+      <FileRef
+         location = "group:Race">
+      </FileRef>
+      <FileRef
+         location = "group:CommonBrickGame">
+      </FileRef>
+   </Group>
+</Workspace>
